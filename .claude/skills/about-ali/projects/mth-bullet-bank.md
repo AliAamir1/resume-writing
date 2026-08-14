@@ -1,0 +1,104 @@
+---
+name: MTH Equities (metrics bullet bank)
+employer: FlatOut Solutions
+dates: unconfirmed
+tech_used: TypeScript | React | MapLibre GL | AWS Lambda | Pulumi | MongoDB | Google Gemini
+url: none
+tags: geospatial, etl, llm, serverless, performance, cost-optimization, testing
+status: UNRECONCILED. Appeared during the restructure, author unknown, not derived from the source READMEs.
+gaps: every metric below needs verifying against the live codebases before it goes on a resume
+---
+
+> **Read before using.** This file carries measured outcomes that the three `mth-*.md` files do not, which makes it the stronger resume source if the numbers hold. But it disagrees with the source material on scope: it says a 30-stage pipeline over all 860,000 NYC tax lots, while the project READMEs said a 13-phase pipeline over target Bronx ZIP codes 10451-10475. One of the two is stale. Reconcile, then fold the survivors into `mth-equities-map.md`, `mth-property-enrichment.md`, and `mth-snf-explorer.md` and delete this file.
+
+# MTH Equities Platform: Resume Bullet Bank
+
+25 bullets. Every one has a measured outcome or a scale number. Pick 3 to 5 per resume.
+
+---
+
+## Project Header Lines
+
+- **MTH Equities Maps Platform** | TypeScript, React, Node.js, MongoDB, MapLibre GL, AWS, Vercel, Fly.io, Cloudflare
+- **NYC Property Data Enrichment Service** | AWS Lambda, SQS, Pulumi, Google Gemini, DynamoDB, TypeScript
+- **SNF Explorer** | React, Express, MongoDB, CMS Open Data, MapLibre GL
+
+---
+
+## Scale and Performance
+
+- **Geospatial Rendering at Scale:** Rendered all 860,000 NYC tax lots in a browser map, with a client-side tile cache that drops repeat loads to zero network calls.
+- **Database Performance:** Cut a 36-second query to under 1 second, eliminating the timeouts that were breaking every lead assignment in production.
+- **Nightly Job Optimization:** Rebuilt a cleanup job burning 50 seconds and 7.7 GB of disk reads per run, ending the cache eviction that was slowing the entire database cluster.
+- **Search Performance:** Replaced an address lookup that scanned 860,000 records per keystroke with a text index, making search instant.
+- **Realtime Architecture:** Designed live updates across every feature in the app, so any user's change appears instantly on every other screen.
+- **Microservice Architecture:** Split the platform into 3 independently deployed services communicating over queues and authenticated APIs.
+
+---
+
+## Data Pipeline
+
+- **NYC Data Pipeline:** Built a 30-stage nightly pipeline loading 860,000 NYC tax lots with their zoning, ownership, permit, and transit data from 25+ public datasets.
+- **Pipeline Throughput:** Re-architected the pipeline onto 8 right-sized machines, erasing 190% night-to-night runtime swings caused by resource contention.
+- **Rate-Limit Engineering:** Cut an 82-hour city-data job to 9 hours by sharding it across 9 egress IPs, without exceeding the endpoint's per-IP limit.
+- **Data Recovery:** Joined a 2.4M-row permit archive to a 4M-row live feed to recover owner phone numbers NYC no longer publishes.
+- **Coverage Analysis:** Found 53% of NYC lot addresses were unsearchable, then integrated the city address directory to close the gap.
+
+---
+
+## AI Pipeline
+
+- **AI Document Extraction:** Built a Gemini vision pipeline that reads scanned NYC deeds and names the human owner behind an LLC at 92% accuracy.
+- **Architecture Decision from Data:** Benchmarked public records at 60.8% owner coverage against 15.6% for the AI pipeline, then rebuilt the system to exhaust free data before any model call.
+- **AI Cost Control:** Cut paid vision-model calls to the 48% of lots that structured data cannot resolve.
+- **Bottleneck Analysis:** Identified OCR as the binding constraint at 857,000 lots and switched to an engine 20x faster per page.
+- **Batch Throughput:** Delivered owner and contact data for 5,000 NYC lots in 27 minutes through a serverless queue pipeline.
+- **Performance Baselining:** Measured 4.7-second median and 5.9-minute p99 enrichment latency, then sized every timeout, queue, and alert to the real distribution.
+
+---
+
+## Infrastructure and Cost
+
+- **Cloud Cost Reduction:** Cut a recurring AWS networking cost 85% by replacing a managed gateway with a self-hosted equivalent.
+- **CI Optimization:** Cut pull request feedback from 7.5 minutes to 4.1 by splitting CI into path-filtered parallel jobs.
+- **Engineering Rigor:** Wrote 7,500+ automated tests and ran mutation testing in CI to verify the suite catches real logic errors.
+
+---
+
+## Product Impact
+
+- **Lead Generation Pipeline:** Built the full flow from NYC property search through AI owner enrichment to contractor assignment and export.
+- **Zoning Rules Engine:** Encoded NYC zoning law into an engine computing legal buildable area for all 900,000 lots in under 180 seconds.
+- **Assemblage Discovery:** Built an adjacency search across NYC blocks that surfaces multi-property development sites invisible to lot-by-lot analysis.
+
+---
+
+## SNF Explorer (separate project section)
+
+- **Healthcare Data Platform:** Unified 5 federal CMS datasets into a single searchable record for every US nursing home.
+- **Cross-Platform Join:** Matched federal nursing home records to NYC tax lots, a link the federal data does not publish.
+- **Ownership Graph:** Modeled the ownership chains behind each facility with fines and violations rolled up per owner.
+
+---
+
+## Skills Section Keyword Bank
+
+Lift the exact terms the posting uses.
+
+**Languages:** TypeScript, JavaScript, Node.js, SQL
+
+**Frontend:** React, Vite, TanStack Query, Tailwind CSS, MapLibre GL, PMTiles, IndexedDB, WebSockets, Zod
+
+**Backend:** Express, REST API, Mongoose, JWT, RBAC, NDJSON streaming, Pusher
+
+**Data:** MongoDB, MongoDB Atlas, DynamoDB, aggregation pipelines, index design, query optimization, geospatial queries, ETL, data pipelines, GeoJSON, GDAL, Turf.js
+
+**Cloud and Infra:** AWS Lambda, SQS, API Gateway, DynamoDB, Secrets Manager, IAM, VPC, Pulumi, Infrastructure as Code, Vercel, Fly.io, Cloudflare R2, Docker
+
+**AI and ML:** Google Gemini, LLM document extraction, vision models, OCR, entity resolution, prompt engineering
+
+**DevOps:** GitHub Actions, CI/CD, monorepo, Yarn workspaces, Vitest, Stryker mutation testing
+
+**Observability:** OpenTelemetry, PostHog, structured logging, feature flags
+
+**Domain:** NYC Open Data, Socrata SODA API, ArcGIS, MapPLUTO, ACRIS, CMS Open Data, geospatial analysis, zoning analysis, PropTech
