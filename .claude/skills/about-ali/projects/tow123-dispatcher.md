@@ -1,9 +1,8 @@
 # Tow123 Dispatcher: Resume Bullets
 
-An autonomous AI dispatcher for a roadside assistance and towing operation. It ingests live job
-and fleet events from two third-party dispatch platforms, talks to customers and drivers over SMS,
-decides which truck and driver to send, and executes the dispatch either through a human approval
-queue or fully on its own.
+21 bullets. An autonomous AI dispatcher for a roadside assistance and towing operation. It ingests live job and fleet events from two third-party dispatch platforms, talks to customers and drivers over SMS, decides which truck and driver to send, and executes the dispatch either through a human approval queue or fully on its own.
+
+Use when the posting is agentic AI, autonomous systems, real-time operations, or AI safety. The deepest file in the folder on shipping autonomy responsibly.
 
 ---
 
@@ -21,57 +20,41 @@ queue or fully on its own.
 
 - **Autonomous AI Dispatcher:** Built the system that decides which truck and driver to send on every tow, without a human.
 - **Staged Autonomy Rollout:** Graduated the dispatcher through three gated phases: silent scoring, human approval, then full autonomy.
-- **Self-Reverting Safety Net:** Daily job demotes the dispatcher to human approval when its 30-day approval rate falls below 85%.
-- **Decision Accuracy Scoring:** Scored the algorithm's driver pick against the human dispatcher's daily, alerting when 7-day accuracy dropped below 70%.
+- **Self-Reverting Safety Net:** Scored every AI pick against the human dispatcher's and auto-demoted the system to human approval when accuracy slipped.
 - **Truck Eligibility Rules Engine:** Encoded nine rule families covering vehicle weight, drive type, exotics, tires, motorcycles, and location.
 - **Replayable Decision Records:** Every dispatch saves a full fleet snapshot, so any pick can be replayed and explained weeks later.
 - **Fairness and Coverage Guards:** Balanced job counts across drivers and blocked draining the last truck out of a high-demand area.
 
-## AI Agents and Customer Communication
+## AI Agents
 
-- **Customer-Facing AI Agent:** Shipped an SMS agent that collects location, vehicle, and service details from stranded customers.
-- **Driver-Facing AI Agent:** Built a second SMS agent that accepts jobs, checks drivers in and out, and requests extra equipment.
 - **Tool-Using Agents:** Gave the agents 31 typed tools so they write real dispatch records instead of only replying.
-- **Human Approval Queue:** Routed every AI-triggered text, dispatch, and third-party write through a dispatcher review queue.
+- **Customer and Driver SMS Agents:** Two agents collect job details from stranded customers and handle driver acceptance, check-in, and equipment requests.
+- **High-Value Vehicle Guard:** AI estimates market value with live web search and auto-cancels vehicles worth over $250,000.
 - **Frustration Escalation:** Detects an angry or stuck customer mid-conversation and hands the thread to a human dispatcher.
 - **Photo Understanding:** The agent reads a photo of a customer's motor club card and a photo of the roadside scene.
-- **High-Value Vehicle Guard:** AI estimates market value with live web search and auto-cancels vehicles worth over $250,000.
 
-## Scale and Performance
+## Safety and Reliability
 
-- **Query Timeout Fix:** Cut a 1.8-second dashboard query under 1 second by replacing a full table read with indexed ranges.
-- **Production Crash Elimination:** Bounded runaway database reads that were crashing dispatch, SMS routing, and the inbound webhook.
-- **Full Table Scan Removal:** Replaced every remaining table scan with indexed queries across 79 tables and 165 indexes.
+- **Three-Layer SMS Kill Switch:** A global switch, a recipient allowlist, and the approval queue prevent accidental texts to real customers.
+- **Human Approval Queue:** Routed every AI-triggered text, dispatch, and third-party write through a dispatcher review queue.
+- **Dead Man's Switch:** A minute-by-minute watchdog emails alerts when the live event feed stops sending heartbeats.
+- **Data Drift Reconciliation:** 24 scheduled jobs repair fleet and job data when third-party events go missing.
 
 ## Cost Engineering
 
 - **$237-a-Day Bill Stopped:** Traced a $237 single-day Google Maps bill to redundant driver ETA lookups and capped the fan-out.
-- **Routing Call Collapse:** A per-job cooldown cut routing API batches from over 15 an hour down to 1 to 3.
-- **Cheaper Routing Path:** Moved single-driver ETA lookups onto an API call costing 75% less than the batch call it replaced.
-- **Geocoding Cache:** Cached driver address lookups by map cell, cutting Google Geocoding spend by about 90%.
+- **Mapping Spend Reduction:** Cached geocoding by map cell and moved ETA lookups to a cheaper call, cutting that spend around 90%.
 
-## Reliability and Safety
+## Scale and Performance
 
-- **Dead Man's Switch:** A minute-by-minute watchdog emails alerts when the live event feed stops sending heartbeats.
-- **Infinite Loop Guard:** Stopped a write-then-webhook feedback loop from re-dispatching the same job forever.
-- **Three-Layer SMS Kill Switch:** A global switch, a recipient allowlist, and the approval queue prevent accidental texts to real customers.
-- **Data Drift Reconciliation:** 24 scheduled jobs repair fleet and job data when third-party events go missing.
-- **Internal Event Bus:** Built a publish-subscribe layer where 78 always-on subscribers react to 27 business events.
+- **Production Crash Elimination:** Bounded runaway database reads that were crashing dispatch, SMS routing, and the inbound webhook.
+- **Full Table Scan Removal:** Replaced every remaining table scan with indexed queries across 79 tables and 165 indexes.
 
-## Testing and Quality
+## Integrations
 
-- **25,800 Automated Tests:** Grew the suite to roughly 25,800 tests across unit, integration, and browser tiers.
-- **Mutation Testing:** Ran mutation testing to find tests that passed while missing real bugs, then closed those gaps.
-- **249 Job Simulations:** Authored 249 multi-actor simulations that replay full tow jobs against both a fake and a live backend.
-- **Vendor API Mock Server:** Built a local interceptor service that captures and replays third-party traffic during tests.
-- **Contract Drift Alerts:** 73 schemas validate every live third-party response and email the team the moment a field changes.
-
-## Integrations and Operator Tools
-
-- **Reverse-Engineered Two Platforms:** Integrated two dispatch systems that publish no public API, by decoding their web traffic.
+- **Platform Integration Without APIs:** Integrated two third-party dispatch platforms that publish no public API, so live job and fleet events flow in automatically.
 - **Motor Club Auto-Accept:** Automatically accepts or denies incoming insurance jobs against ETA and price thresholds.
-- **Dispatch Comparison Screen:** Built a replay screen putting the algorithm's pick beside the dispatcher's, with both routes on a map.
-- **Simulator Suite:** Shipped driver GPS, customer text, and dispatch simulators so staff test flows without touching production.
+- **Contract Drift Alerts:** 73 schemas validate every live third-party response and email the team the moment a field changes.
 
 ---
 
@@ -94,3 +77,25 @@ queue or fully on its own.
 **Integrations** Twilio SMS and MMS, Google Maps Routes and Geocoding, Mapbox, Stripe, Resend, Firebase, Okta SSO with TOTP, Pusher
 
 **Domain** Towing and roadside assistance, dispatch operations, fleet management, ETA prediction, motor club billing, insurance job intake
+
+---
+
+## Selection guidance
+
+Strongest openers, in order: Autonomous AI Dispatcher, Staged Autonomy Rollout, $237-a-Day Bill Stopped, High-Value Vehicle Guard, Self-Reverting Safety Net.
+
+Staged Autonomy Rollout and Self-Reverting Safety Net are the pair that separate this from every other AI project. Anyone can ship an agent. Shipping one that grades itself and revokes its own permissions is the part a serious reader will want to discuss.
+
+High-Value Vehicle Guard is the most memorable single sentence: an AI that refuses to tow a $250,000 car.
+
+Resting on scope. Drop first: Photo Understanding, Data Drift Reconciliation, Motor Club Auto-Accept.
+
+---
+
+## Confirm before sending
+
+- **Platform integration was authorized client work**, connecting the towing company's own accounts on dispatch platforms they already paid for. Never write "reverse-engineered" or "decoded their traffic" as the headline. The technical detail is fine in conversation.
+- **Self-Reverting Safety Net dropped its thresholds** (85% approval over 30 days, 70% accuracy over 7 days) because two sets of numbers in one bullet obscured the idea. Bring them back if a posting is metrics-heavy.
+- **Never claim a test count or mutation testing.** 25,800 tests, 249 simulations, and the mock server were cut on purpose: a resume sells what you built, not how the code was written.
+- **$237, $250,000, 31 tools, 79 tables, 165 indexes, 73 schemas, 24 jobs** are all real. Know the source of each before an interview.
+- **No dispatch volume metrics exist.** Jobs auto-dispatched per day, or the share running without human approval, would outrank every bullet above.

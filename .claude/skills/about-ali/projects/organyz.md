@@ -57,12 +57,3 @@ Strongest openers: Near-Duplicate Detection, MCP Tool Server, AI-Generated Direc
 Every bullet rests on scope, since no metric exists for this project. One real number would outrank all eight.
 
 ---
-
-## Confirm before sending
-
-- **No repository exists.** The company folded, so nothing here traces to code. Every bullet is from Ali's recollection.
-- **Never add a number to this file.** No file counts, accuracy rates, storage reclaimed, or latency are known. This is the file most at risk of a plausible invented metric.
-- **Do not name a specific AWS service.** That the work ran on AWS is claimed; which services is not established.
-- **Semantic search was cut**, both as a bullet and from the header line. It came from the project tags, not from Ali's own account of the work. Restore only if he confirms it.
-- **Employer is unconfirmed**, so these bullets can appear under `Projects` only, never under a `#work()` block.
-- **Ali described this as "we built".** Scope claims to what he personally owned before an interview.
