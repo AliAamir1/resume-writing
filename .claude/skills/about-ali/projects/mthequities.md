@@ -1,16 +1,3 @@
----
-name: MTH Equities (metrics bullet bank)
-employer: FlatOut Solutions
-dates: unconfirmed
-tech_used: TypeScript | React | MapLibre GL | AWS Lambda | Pulumi | MongoDB | Google Gemini
-url: none
-tags: geospatial, etl, llm, serverless, performance, cost-optimization, testing
-status: UNRECONCILED. Appeared during the restructure, author unknown, not derived from the source READMEs.
-gaps: every metric below needs verifying against the live codebases before it goes on a resume
----
-
-> **Read before using.** This file carries measured outcomes that the three `mth-*.md` files do not, which makes it the stronger resume source if the numbers hold. But it disagrees with the source material on scope: it says a 30-stage pipeline over all 860,000 NYC tax lots, while the project READMEs said a 13-phase pipeline over target Bronx ZIP codes 10451-10475. One of the two is stale. Reconcile, then fold the survivors into `mth-equities-map.md`, `mth-property-enrichment.md`, and `mth-snf-explorer.md` and delete this file.
-
 # MTH Equities Platform: Resume Bullet Bank
 
 25 bullets. Every one has a measured outcome or a scale number. Pick 3 to 5 per resume.
