@@ -1,6 +1,6 @@
 # MTH Equities Platform: Resume Bullet Bank
 
-25 bullets. Every one has a measured outcome or a scale number. Pick 3 to 5 per resume.
+21 bullets. Nearly every one carries a measured outcome or a scale number, which makes this the strongest file in the folder. Pick 3 to 5 per resume.
 
 ---
 
@@ -14,12 +14,10 @@
 
 ## Scale and Performance
 
-- **Geospatial Rendering at Scale:** Rendered all 860,000 NYC tax lots in a browser map, with a client-side tile cache that drops repeat loads to zero network calls.
+- **Geospatial Rendering at Scale:** Rendered all 860,000 NYC tax lots in one browser map, with a tile cache dropping repeat loads to zero network calls.
 - **Database Performance:** Cut a 36-second query to under 1 second, eliminating the timeouts that were breaking every lead assignment in production.
-- **Nightly Job Optimization:** Rebuilt a cleanup job burning 50 seconds and 7.7 GB of disk reads per run, ending the cache eviction that was slowing the entire database cluster.
+- **Nightly Job Optimization:** Rebuilt a nightly job burning 7.7 GB of disk reads per run, ending cache eviction that slowed the whole database cluster.
 - **Search Performance:** Replaced an address lookup that scanned 860,000 records per keystroke with a text index, making search instant.
-- **Realtime Architecture:** Designed live updates across every feature in the app, so any user's change appears instantly on every other screen.
-- **Microservice Architecture:** Split the platform into 3 independently deployed services communicating over queues and authenticated APIs.
 
 ---
 
@@ -28,17 +26,16 @@
 - **NYC Data Pipeline:** Built a 30-stage nightly pipeline loading 860,000 NYC tax lots with their zoning, ownership, permit, and transit data from 25+ public datasets.
 - **Pipeline Throughput:** Re-architected the pipeline onto 8 right-sized machines, erasing 190% night-to-night runtime swings caused by resource contention.
 - **Rate-Limit Engineering:** Cut an 82-hour city-data job to 9 hours by sharding it across 9 egress IPs, without exceeding the endpoint's per-IP limit.
-- **Data Recovery:** Joined a 2.4M-row permit archive to a 4M-row live feed to recover owner phone numbers NYC no longer publishes.
+- **Public Records Join:** Joined a 2.4M-row permit archive to a 4M-row live feed to restore owner contact fields absent from the current dataset.
 - **Coverage Analysis:** Found 53% of NYC lot addresses were unsearchable, then integrated the city address directory to close the gap.
 
 ---
 
 ## AI Pipeline
 
-- **AI Document Extraction:** Built a Gemini vision pipeline that reads scanned NYC deeds and names the human owner behind an LLC at 92% accuracy.
-- **Architecture Decision from Data:** Benchmarked public records at 60.8% owner coverage against 15.6% for the AI pipeline, then rebuilt the system to exhaust free data before any model call.
-- **AI Cost Control:** Cut paid vision-model calls to the 48% of lots that structured data cannot resolve.
-- **Bottleneck Analysis:** Identified OCR as the binding constraint at 857,000 lots and switched to an engine 20x faster per page.
+- **AI Document Extraction:** Built a Gemini vision pipeline reading scanned NYC deeds to resolve property ownership behind LLC filings at 92% accuracy.
+- **Architecture Decision from Data:** Benchmarked public records at 60.8% owner coverage against 15.6% for AI, then routed only the unresolved 48% to a paid vision model.
+- **Bottleneck Analysis:** Identified OCR as the binding constraint at 860,000 lots and switched to an engine 20x faster per page.
 - **Batch Throughput:** Delivered owner and contact data for 5,000 NYC lots in 27 minutes through a serverless queue pipeline.
 - **Performance Baselining:** Measured 4.7-second median and 5.9-minute p99 enrichment latency, then sized every timeout, queue, and alert to the real distribution.
 
@@ -47,15 +44,13 @@
 ## Infrastructure and Cost
 
 - **Cloud Cost Reduction:** Cut a recurring AWS networking cost 85% by replacing a managed gateway with a self-hosted equivalent.
-- **CI Optimization:** Cut pull request feedback from 7.5 minutes to 4.1 by splitting CI into path-filtered parallel jobs.
-- **Engineering Rigor:** Wrote 7,500+ automated tests and ran mutation testing in CI to verify the suite catches real logic errors.
 
 ---
 
 ## Product Impact
 
 - **Lead Generation Pipeline:** Built the full flow from NYC property search through AI owner enrichment to contractor assignment and export.
-- **Zoning Rules Engine:** Encoded NYC zoning law into an engine computing legal buildable area for all 900,000 lots in under 180 seconds.
+- **Zoning Rules Engine:** Encoded NYC zoning law into an engine computing legal buildable area for all 860,000 lots in under 180 seconds.
 - **Assemblage Discovery:** Built an adjacency search across NYC blocks that surfaces multi-property development sites invisible to lot-by-lot analysis.
 
 ---
@@ -89,3 +84,15 @@ Lift the exact terms the posting uses.
 **Observability:** OpenTelemetry, PostHog, structured logging, feature flags
 
 **Domain:** NYC Open Data, Socrata SODA API, ArcGIS, MapPLUTO, ACRIS, CMS Open Data, geospatial analysis, zoning analysis, PropTech
+
+---
+
+## Selection guidance
+
+Strongest openers, in order: Database Performance, Rate-Limit Engineering, AI Document Extraction, Architecture Decision from Data, Cloud Cost Reduction. Each states a before and an after a non-technical reader can price.
+
+Resting on scope rather than an outcome. Drop first: Lead Generation Pipeline, Assemblage Discovery, Healthcare Data Platform, Ownership Graph.
+
+SNF Explorer is a separate product. Use it as its own `#project()` block, never mixed into MTH bullets.
+
+---
