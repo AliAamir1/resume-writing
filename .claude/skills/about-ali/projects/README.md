@@ -37,7 +37,7 @@ Bullets are already ATS-formatted: `*Keyword Title*: claim.` ASCII hyphens only,
 | Freight Forwarding Operations API | unconfirmed | rest-api, prisma, postgresql, multi-tenant, pdf, logistics | [cargo-backend.md](cargo-backend.md) |
 | Freight Operations Portal | unconfirmed | nextjs, frontend, tanstack-query, forms, auth, vercel | [cargo-ops-portal.md](cargo-ops-portal.md) |
 | Career Coach | unconfirmed | llm, openai, edtech, rag, file-search, nextjs | [career-coach.md](career-coach.md) |
-| Organyz | unconfirmed | agentic, langgraph, python, aws-ml, semantic-search | [organyz.md](organyz.md) |
+| Organyz | unconfirmed | agentic, langgraph, python, mcp, hitl, classification, dedup, semantic-search, storage | [organyz.md](organyz.md) |
 | Omnilocal | unconfirmed | integrations, etl, scraping, serverless, real-estate | [omnilocal.md](omnilocal.md) |
 | joinpangia | unconfirmed | llm, langchain, agentic, fact-checking, multimodal, python | [joinpangia.md](joinpangia.md) |
 | Alvanda | unconfirmed | b2b, saas, real-time, socketio, redis, mern, workflow | [alvanda.md](alvanda.md) |

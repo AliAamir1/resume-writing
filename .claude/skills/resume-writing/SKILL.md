@@ -89,6 +89,14 @@ The ATS runs two passes:
 
 Bullet titles are the edge. Everyone else stuffs a skills section; almost nobody labels their bullets. A human skimming 50 resumes reads the left edge of your bullets and sees which skill you used and where you used it.
 
+**Keep bullets to 15-20 words, 25 hard cap.** At 10pt a 30-word bullet wraps to three lines, eats page space, and buries the payoff behind mechanism. Cut the how, keep the what and the so-what. Two short sentences beat one long one.
+
+| Too long (33 words) | Tight (19 words) |
+|---|---|
+| Collapsed customer, supplier, shipper, consignee, consignor, warehouse, haulier, and agent into one party record carrying all 8 roles at once, so a company that both ships and receives stops existing twice. | Collapsed 8 contact types into one party record, so a firm that ships and receives stops existing twice. |
+
+Domain vocabulary cut for length is not lost: the Skills section already carries it for keyword matching. The bullet only needs enough flavour to prove the domain is real.
+
 Never stuff. One or two mentions per keyword. `Python, Python programming, Python developer, Python expert` is a tell.
 
 Use the posting's exact term when your term means the same thing: "data visualization", not "making charts". Do not swap a word for a less accurate one just to match.

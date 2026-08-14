@@ -1,6 +1,8 @@
-# Resume Bullets — JARVIS
+# Resume Bullets: JARVIS
 
 AI lead-outreach platform for an insurance agency. Autonomous SMS and email campaigns, GPT-driven conversations, sentiment-based lead qualification, and a role-gated admin console.
+
+Use when the posting is agentic AI, LLM application, marketing automation, or anything in a regulated industry. Keep the bullets in this order: they build to an AI that talks to real customers unsupervised, then the guardrails that made it safe.
 
 ---
 
@@ -12,31 +14,14 @@ AI lead-outreach platform for an insurance agency. Autonomous SMS and email camp
 
 ---
 
-## AI Pipeline
+## Bullets
 
-- **Agentic AI Suite:** Built nine AI agents covering outreach copy, live replies, sentiment scoring, and agent handoff.
-- **Sentiment-Driven Lead Routing:** A three-label classifier moves every lead between five campaign states with no human review.
-- **LLM Output Hardening:** Wrote a fallback parser that recovers a usable label when the classifier returns prose, not a number.
-- **Prompt Guardrails:** Blocked price quotes, emojis, and over-1550-character replies across every customer-facing insurance prompt.
-- **Bilingual Handoff:** Tagged every agent handoff summary as Spanish or English, read from the lead's own messages.
+- **Autonomous Lead Qualification:** Let the AI qualify and re-route every lead through five campaign states on its own, with no human reviewing the decision.
+- **Agentic AI Suite:** Built nine AI agents running the outreach lifecycle end to end, from writing the first message through holding live reply conversations to handing warm leads off to a salesperson.
+- **Prompt Guardrails:** Stopped a customer-facing insurance AI from ever quoting a price, so an automated conversation could not commit the agency to a number it had to honour.
+- **Opt-Out Enforcement:** Halted outreach the moment a lead replied STOP, DNC, UNSUB, or any of 19 opt-out patterns, because a single missed opt-out is a per-message regulatory penalty.
 
-## Autonomous Campaign Engine
-
-- **Always-On Orchestration:** Ran six background services that send, poll for replies, score sentiment, and page managers continuously.
-- **Two-Channel State Machine:** One lead lifecycle drives both SMS and Gmail campaigns from first touch to booked appointment.
-- **Gmail Thread Continuity:** Threaded every AI reply into the lead's original conversation using In-Reply-To and References headers.
-- **Manager Escalation:** Texted sales agents a GPT summary of each interested lead, throttled to one batch every 15 minutes.
-
-## Compliance and Data Ingestion
-
-- **Opt-Out Enforcement:** Matched 19 stop-word and regex patterns including STOP, DNC, UNSUB, and CANCEL to halt outreach immediately.
-- **Inbox Lead Scraper:** Parsed inbound vendor lead emails into structured records across two incompatible email layouts.
-- **Bulk CSV Upload:** Validated uploads row by row and returned the exact row number, field, and reason for every failure.
-
-## Access Control and Delivery
-
-- **Granular Permission System:** Shipped 29 permissions across 8 roles gating 19 of 24 application routes.
-- **Full-Stack Delivery:** Wrote half of 185 frontend commits across 17 reviewed pull requests on a seven-person team.
+**On the bench:** Two-Channel State Machine, one lead lifecycle driving both SMS and Gmail from first touch to booked appointment. Swap it in for multi-channel or CRM postings.
 
 ---
 
@@ -57,3 +42,12 @@ AI lead-outreach platform for an insurance agency. Autonomous SMS and email camp
 **DevOps:** Git, GitHub pull request workflow, feature branching, environment configuration
 
 **Domain:** Insurance lead generation, marketing campaign automation, CRM workflows, TCPA-style opt-out compliance, role-based access control
+
+---
+
+## Confirm before sending
+
+- "Nine agents" must mean nine distinct agents, not nine prompts inside fewer services.
+- "No human reviewing the decision" is the highest-risk claim here. Confirm no manual approval step existed anywhere in the routing path, because an interviewer will probe it.
+- Never name a specific statute or penalty figure for the opt-out compliance work.
+- No campaign metrics exist. One real conversion number would outrank every bullet above.

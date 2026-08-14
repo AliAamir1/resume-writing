@@ -1,5 +1,11 @@
 # Resume Bullets
 
+An AI-powered EdTech platform: upload a document, get a generated course, learn through delivered lessons and quizzing.
+
+Use when the posting is AI product, LLM application, or EdTech adjacent.
+
+---
+
 ## Project Header Lines
 
 **Verdax AI Career Coach, Backend** | Node.js, Express, TypeScript, MongoDB, OpenAI Assistants API, Zod, AWS EC2, Nginx, PM2
@@ -8,22 +14,13 @@
 
 ---
 
-## AI Pipeline and Streaming
+## Bullets
 
-- **Streaming Structured Output:** Wrote a character-level parser that streams prose out of a JSON-schema AI response mid-generation.
-- **Multi-Assistant Architecture:** Split one overloaded tutor into three OpenAI assistants for course generation, lesson delivery, and quizzing.
-- **Document to Curriculum:** Converted an uploaded PDF into a 10 to 20 module course with lessons and sublessons.
-- **Model Cost Tiering:** Graded open-ended quiz answers on gpt-4o-mini and reserved gpt-4o for heavier course generation work.
-- **Personalized Recommendations:** Sampled 30 active courses and had GPT-4o select 8 matched to a 7-question learner profile.
+- **Document to Curriculum:** Turned an uploaded PDF into a full course of 10 to 20 modules with lessons and sublessons, so an instructor ships a syllabus instead of writing one.
+- **Streaming Structured Output:** Streamed lesson text to the reader while the model was still generating it, parsing prose out of a structured response mid-flight rather than making the user wait for the whole payload to close.
+- **Multi-Assistant Architecture:** Split one overloaded AI tutor into three specialists for course generation, lesson delivery, and quizzing, so each ran on a prompt tuned to its own job instead of one prompt doing all three badly.
 
-## Learning Platform
-
-- **Career Pathways:** Built ordered course pathways surfacing each course's prerequisite and per-user completion state.
-- **Gamified Retention:** Shipped XP scoring, daily streak tracking, and 21 named progression levels tied to lesson completion.
-
-## Infrastructure
-
-- **Zero-Touch Deploys:** Built GitHub Actions pipelines shipping two services to EC2 with PM2, Nginx, and auto-issued SSL.
+Drop Multi-Assistant Architecture first when space is tight.
 
 ---
 
@@ -44,3 +41,10 @@
 **DevOps:** GitHub Actions, CI/CD, SSH deployment, process management, environment secret management
 
 **Domain:** EdTech, adaptive learning, curriculum generation, quiz assessment, gamification, career pathways, learner analytics
+
+---
+
+## Confirm before sending
+
+- Streaming Structured Output only works as a bullet if prose was extracted while the response was still open, not assembled after it closed.
+- No learner or usage metrics exist for this project. Never add one.
