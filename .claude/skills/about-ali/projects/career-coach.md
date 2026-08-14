@@ -1,22 +1,46 @@
+# Resume Bullets
+
+## Project Header Lines
+
+**Verdax AI Career Coach, Backend** | Node.js, Express, TypeScript, MongoDB, OpenAI Assistants API, Zod, AWS EC2, Nginx, PM2
+
+**Verdax AI Career Coach, Web App** | Next.js 14, React 18, TypeScript, TanStack Query, NextAuth, Jotai, Tailwind CSS
+
 ---
-name: Career Coach
-employer: unconfirmed
-dates: unconfirmed
-tech_used: OpenAI Assistants API | Next.js 14 | Express | MongoDB | TypeScript
-url: beta.verdax.co.uk
-tags: llm, openai, edtech, rag, file-search, nextjs, middleware
-gaps: dates, employer, courses generated, learners
+
+## AI Pipeline and Streaming
+
+- **Streaming Structured Output:** Wrote a character-level parser that streams prose out of a JSON-schema AI response mid-generation.
+- **Multi-Assistant Architecture:** Split one overloaded tutor into three OpenAI assistants for course generation, lesson delivery, and quizzing.
+- **Document to Curriculum:** Converted an uploaded PDF into a 10 to 20 module course with lessons and sublessons.
+- **Model Cost Tiering:** Graded open-ended quiz answers on gpt-4o-mini and reserved gpt-4o for heavier course generation work.
+- **Personalized Recommendations:** Sampled 30 active courses and had GPT-4o select 8 matched to a 7-question learner profile.
+
+## Learning Platform
+
+- **Career Pathways:** Built ordered course pathways surfacing each course's prerequisite and per-user completion state.
+- **Gamified Retention:** Shipped XP scoring, daily streak tracking, and 21 named progression levels tied to lesson completion.
+
+## Infrastructure
+
+- **Zero-Touch Deploys:** Built GitHub Actions pipelines shipping two services to EC2 with PM2, Nginx, and auto-issued SSL.
+
 ---
 
-# Career Coach
+## Skills Keyword Bank
 
-AI e-learning platform turning an uploaded document into a structured course, then delivering it through a conversational AI tutor with adaptive quizzing.
+**Languages:** TypeScript, JavaScript, HTML, CSS
 
-## Bullets
+**Frontend:** React 18, Next.js 14 App Router, TanStack Query, Jotai, Tailwind CSS, Radix UI, shadcn/ui, Framer Motion, React Hook Form, dnd-kit, token streaming, Web Speech API
 
-- *OpenAI Assistants API*: Built a three-assistant architecture separating course generation using file search over uploaded documents, per-thread lesson delivery, and quiz generation, keeping prompts focused and preventing cross-task drift.
-- *Document-to-Course Pipeline*: Ingested uploaded source material and emitted a structured blueprint of modules, lessons, and sublessons, then delivered it chapter by chapter through a conversational tutor that gauges understanding before advancing.
-- *LLM State Machine*: Drove lesson progression from transition flags emitted by the assistant and interpreted by the frontend, a pragmatic alternative to a rules engine layered over free-form chat.
-- *Adaptive Assessment*: Generated mixed multiple-choice and open-ended quizzes tied to the sublessons just covered, scored them, and fed results back into each learner's course path.
-- *Role-Based Routing*: Enforced admin and student separation in Next.js middleware so each role is blocked from the other's routes at the edge.
-- *Production Deployment*: Deployed a split Next.js frontend and Express with MongoDB backend behind Nginx with PM2 process management.
+**Backend:** Node.js, Express, REST APIs, Zod validation, JWT, NextAuth, bcrypt, Multer, streaming responses, middleware auth
+
+**Data:** MongoDB, Mongoose, schema design, aggregation pipelines, document population, progress modeling
+
+**Cloud:** AWS EC2, Nginx reverse proxy, PM2, Certbot/Let's Encrypt, Cloudinary CDN
+
+**AI:** OpenAI Assistants API, GPT-4o, GPT-4o-mini, structured outputs, JSON schema response formats, vector stores, file search retrieval, RAG, prompt engineering, token streaming, text-to-speech, speech-to-text
+
+**DevOps:** GitHub Actions, CI/CD, SSH deployment, process management, environment secret management
+
+**Domain:** EdTech, adaptive learning, curriculum generation, quiz assessment, gamification, career pathways, learner analytics

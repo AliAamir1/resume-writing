@@ -27,7 +27,6 @@ Software engineer with 4 years building AI-native production systems: multi-prov
 | Portfolio | https://ali-aamir.vercel.app |
 | City / State / Country | Lahore / Punjab / Pakistan |
 | Time zone | PKT (UTC+5) |
-| Pronouns | he/him |
 | Years of professional experience | 4 |
 
 ## Education
@@ -65,10 +64,22 @@ Only globally-remote roles. The job must permit employment from Pakistan.
 
 ## Work authorization
 
-Pakistani citizen, authorized to work in Pakistan only. Not authorized in the US, Canada, UK, EU, or Australia without sponsorship plus relocation, which is a deal-breaker.
+Pakistani citizen, authorized to work in Pakistan. Working from Lahore for a foreign company requires no visa and no sponsorship. Engagement is through a global EOR (Deel, Remote.com, Oyster, Velocity Global) or a direct contractor agreement.
 
-- "Authorized to work in [company's country]?" on a globally-remote role: the literal truthful answer is **No**. The company would engage through a global EOR or contractor arrangement.
-- "Will you require sponsorship?": **Yes**, if the role implies relocation.
+Relocation roles are already disqualifying, so relocation never applies to anything applied to.
+
+| Form question | Answer |
+|---|---|
+| "Will you now or in the future require sponsorship for an employment visa (e.g. H-1B)?" | **No.** Sponsorship means a visa petition. Working from Pakistan needs none. |
+| "Are you legally authorized to work in [US / UK / EU / Canada]?" | **No.** Truthful. Never answer otherwise. |
+| "Are you authorized to work in your country of residence?" | **Yes.** |
+| "Will you relocate?" | **No.** |
+
+**Answering No to both authorization and sponsorship reads as contradictory** unless explained. Wherever a free-text or additional-information box exists, add:
+
+> Based in Pakistan (UTC+5), working fully remote. No visa or sponsorship required. Available via employer-of-record (Deel, Remote.com, Oyster) or as a direct contractor.
+
+If the form has no free-text box and the role is not explicitly global, that posting is a Pass 1 auto-drop regardless of what is written. Skip it and spend the time on a posting that says "remote worldwide".
 
 ## Legal and screening
 
@@ -90,11 +101,3 @@ Pakistani citizen, authorized to work in Pakistan only. Not authorized in the US
 | Race / ethnicity | Asian |
 | Disability | No |
 | Veteran status | No |
-
-## Form-fill rules
-
-- Phone country select: "Pakistan (+92)". National input: `03214579630`.
-- "Current location" or "City": "Lahore, Pakistan".
-- "Country and time zone": "Pakistan, PKT (UTC+5)".
-- Always fill LinkedIn and GitHub URL fields. Never leave them blank when asked.
-- Easy Apply work-history slots pre-fill from LinkedIn. For slots LinkedIn leaves blank, **do not fabricate**. Skip them; the form usually still submits. If submit fails with HTTP 400 on a required-but-blank slot, mark the job `skipped_unknown_q` and queue for manual review.

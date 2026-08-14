@@ -1,99 +1,130 @@
 # Kollaborative AI: Resume Bullet Bank
 
-22 bullets. Every number traces to code in this repo. Pick 3 to 5 per resume.
+25 bullets. Every number traces to code in this repo. Pick 3 to 5 per resume.
+
+The product: a team AI workspace. People share chats, build searchable knowledge bases from their conversations, connect outside AI tools to it, and get billed per seat.
 
 ---
 
 ## Project Header Lines
 
-- **Kollaborative AI** | TypeScript, Next.js 15, React 19, Convex, Clerk, AWS ECS Fargate, Pulumi
-- **MCP Proxy** | TypeScript, Cloudflare Workers, OAuth 2.0
-- **CCCollab MCP Proxy** | TypeScript, Cloudflare Workers, Vitest
+- **Kollaborative AI** | TypeScript, Next.js 15, React 19, Convex, Clerk, Cloudflare Pages
+- **Agent API and OAuth Server** | TypeScript, Model Context Protocol, OAuth 2.1, PKCE
+- **Edge Proxies** | TypeScript, Cloudflare Workers, Wrangler
 
 ---
 
-## AI and Retrieval
+## Money
 
-- **Model Cost Benchmarking:** Benchmarked summarization models and shipped one 12x cheaper than Claude Haiku 4.5 with 5x the context window.
-- **Batch Embedding Design:** Rewrote reindexing into a single batched call after finding a per-message loop wasted 99% of the 1000-input budget.
-- **Contextual Embeddings:** Embedded conversation chunks as one group so the model contextualizes across messages instead of isolating each.
-- **Crash-Safe Reindexing:** Ordered embedding before deletion so a failed reindex leaves existing vectors intact and safely re-runnable.
-- **Multi-Provider Streaming:** Streamed responses from OpenAI, Anthropic, and Google behind one interface, flushing partial output every 150ms.
-- **Silent-Failure Prevention:** Emitted a greppable truncation warning when reindexing hits its page cap, rather than under-indexing quietly.
-- **Per-Task Model Routing:** Selected the best model per task across all providers, independent of which API keys the customer configured.
+- **AI Cost Cut:** Benchmarked summarization models and switched to one 12x cheaper with 5x the context window.
+- **1,000x Fewer Vendor Calls:** Rebuilt knowledge-base indexing to send 1,000 messages per AI call instead of one.
+- **Unbilled AI Spend:** Closed a hole letting background jobs run paid AI calls with nobody on the hook for the bill.
+- **Open Wallet Endpoint:** Shut down a public page forwarding unlimited-length prompts to two paid AI vendors with no login.
+- **Runaway Agent Loop:** Stopped two AI agents emoji ping-ponging forever, each round trip billed as a paid call.
+- **Spend Cap Before Download:** Blocked over-budget accounts before file download, since one 240KB attachment bills 134 embeddings.
+
+---
+
+## Search and AI Pipeline
+
+- **Silent Search Data Loss:** Found pasted documents keeping only their last 2,000 characters, while the rebuild reported success.
+- **Safe Rebuild Ordering:** Built the new search index before deleting the old one, so failures never empty a knowledge base.
+- **Silent Model Downgrade:** Caught conversations pinned to a premium AI model quietly answering on a cheaper, weaker one.
+- **Four Providers, One Interface:** Streamed 15 chat models and 6 image models from OpenAI, Anthropic, Google and OpenRouter.
 
 ---
 
 ## Reliability
 
-- **Timeout Recovery:** Scheduled a 9.5-minute guardian that force-completes messages the platform's 10-minute action limit would otherwise strand forever.
-- **Stale Job Reclamation:** Ran a 5-minute cron recovering messages stuck in progress past 10 minutes.
-- **Rate-Limit Honesty:** Documented that job staggering gives no rate-limit protection under a shared API key, and scoped the real fix.
+- **Hung Chat Recovery:** AI replies killed mid-generation hung forever; added a watchdog clearing them within 30 seconds.
+- **15-Minute Retry Budget:** Gave every indexing job 15 minutes of automatic retries through vendor rate limits before giving up.
+- **Self-Healing Billing:** Six background jobs re-converge seat counts and subscriptions after any failed call to the billing provider.
 
 ---
 
-## Protocol and Integration
+## Permissions and Data Correctness
 
-- **MCP OAuth Server:** Implemented a full OAuth 2.0 authorization server for Model Context Protocol, covering clients, codes, tokens, and flows.
-- **Edge Proxy:** Deployed a Cloudflare Worker proxying MCP traffic onto the product's own domain.
-- **Identity Reconciliation:** Built account-merge logic collapsing duplicate users while preserving the highest role each held.
-
----
-
-## Data Model and Access Control
-
-- **Schema Design:** Modeled 41 tables with 178 indexes spanning organizations, spaces, teams, threads, and per-resource access grants.
-- **Vector Search:** Added vector and full-text indexes powering retrieval across Kollaborator and Space knowledge bases.
-- **Multi-Tenant Permissions:** Enforced organization, space, team, thread, and conversation grants inside every backend function, not the UI.
+- **Share Dialog Read Blowout:** Capped participant lists at 50 after large organizations pushed the share dialog past the database's read limit.
+- **No Fake Zeros:** Showed a dash, not "0 members", when a guest lacks permission to see an organization's real numbers.
+- **Duplicate Account Merge:** Collapsed one person's multiple logins into a single account across 29 tables, dry run first.
+- **43-Table Permission Model:** Designed organizations, spaces, teams and threads with per-resource sharing across 43 tables and 188 indexes.
 
 ---
 
-## Infrastructure and CI
+## Integrations
 
-- **Path-Filtered CI:** Split the pipeline on change detection so frontend and backend deploy independently instead of together.
-- **Keyless Cloud Auth:** Authenticated CI to AWS over OIDC with zero long-lived credentials in the repository.
-- **Container Deployment:** Shipped a multi-stage Docker build to ECS Fargate behind an ALB, provisioned entirely in Pulumi.
-- **Secret Synchronization:** Automated pushing environment secrets to the backend as a deploy stage.
+- **Killed Pasted API Keys:** Built an OAuth server so people connect outside tools by signing in, not pasting permanent secrets.
+- **Agent API:** Exposed 16 tools letting outside AI agents read and write conversations, spaces and knowledge bases.
+- **Hid the Backend Address:** Put the real-time backend behind an edge proxy so its address never shipped in a public npm package.
+
+---
+
+## Infrastructure
+
+- **Split Deploy Pipeline:** Backend, frontend and two edge workers now ship separately instead of all four on every push.
+- **Fail Before Shipping Broken:** Made the build fail on a missing secret that would have silently disabled every rate limit.
 
 ---
 
 ## Testing
 
-- **Test Suite Scale:** Wrote 2,701 test cases across 246 files covering backend functions and React components.
-- **Pre-Commit Enforcement:** Gated every commit on format, lint, and type checks through Husky.
+- **3,802 Tests:** Wrote 3,802 automated tests across 334 files covering backend logic and React components.
+- **Tests Written in English:** Drove browser tests with plain-English instructions, so UI refactors stop breaking the test suite.
+- **Real-Browser Layout Test:** Replaced a CSS-class assertion with a real-browser test catching actual mobile scroll breakage.
 
 ---
 
 ## Skills Keyword Bank
 
-**Languages:** TypeScript, JavaScript, SQL
+**Languages:** TypeScript, JavaScript, Bash
 
-**Frontend:** React 19, Next.js 15, App Router, Tailwind CSS, shadcn/ui, Radix, React Hook Form, Zod
+**Frontend:** React 19, Next.js 15, App Router, Tailwind CSS, shadcn/ui, Radix UI, React Hook Form, Zod, TanStack Table, Framer Motion
 
-**Backend:** Convex, serverless functions, real-time subscriptions, cron scheduling, webhooks, REST
+**Backend:** Convex, serverless functions, real-time subscriptions, cron scheduling, webhooks, HTTP actions, pagination
 
-**AI:** OpenAI, Anthropic Claude, Google Gemini, OpenRouter, RAG, vector search, embeddings, contextual retrieval, streaming inference, prompt engineering, Model Context Protocol
+**AI:** OpenAI, Anthropic Claude, Google Gemini, OpenRouter, Voyage AI, RAG, vector search, contextualized embeddings, reranking, streaming inference, tool calling, Model Context Protocol
 
-**Auth and Security:** Clerk, OAuth 2.0 authorization server, RBAC, multi-tenant access control, API key encryption
+**Auth and Security:** Clerk, OAuth 2.1, PKCE, dynamic client registration, RBAC, multi-tenant access control, AES-256-GCM, token hashing, secrets encrypted at rest
 
-**Cloud and Infra:** AWS ECS Fargate, ALB, ECR, Route53, SES, Pulumi, Infrastructure as Code, Docker, Cloudflare Workers, Wrangler
+**Cloud and Infra:** Cloudflare Pages, Cloudflare Workers, Wrangler, edge runtime, WebSocket proxying
 
-**DevOps:** GitHub Actions, OIDC, path-filtered CI, monorepo, Yarn, Volta, Husky
+**DevOps:** GitHub Actions, path-filtered CI, monorepo, Yarn, Volta, Husky, LaunchDarkly, git worktrees
 
-**Testing:** Vitest, Playwright, React Testing Library
+**Testing:** Vitest, React Testing Library, convex-test, Playwright, Stagehand
+
+**Domain:** Multi-tenant SaaS, per-seat billing, bring-your-own-key plans, usage metering, spend caps, rate limiting
 
 ---
 
 ## Report
 
-**Strongest 5.** Each names a decision with a measured consequence, which is what a reader cannot get from a job title.
+### Strongest 5
 
-1. **Batch Embedding Design** - 99% waste found and eliminated. A measured before and after on a non-obvious bug.
-2. **Model Cost Benchmarking** - 12x cost delta with the context tradeoff named. Shows cost ownership, not just API usage.
-3. **Timeout Recovery** - 9.5 against a 10-minute platform ceiling. Demonstrates reading the platform's limits and engineering inside them.
-4. **MCP OAuth Server** - implementing an OAuth authorization server is rare and currently in demand.
-5. **Test Suite Scale** - 2,701 tests is a hard number most candidates cannot produce.
+1. **AI Cost Cut.** 12x is a number a hiring manager can convert to money without knowing anything about the codebase.
+2. **1,000x Fewer Vendor Calls.** Same reason, bigger number, and it names the thing that got cheaper.
+3. **Open Wallet Endpoint.** Anyone reading it immediately pictures the damage: strangers spending your company's money.
+4. **Hung Chat Recovery.** A user-visible failure with a stated recovery time. Product sense plus engineering.
+5. **3,802 Tests.** A hard count most candidates cannot produce.
 
-**Resting on scope, drop these first when space is tight.** Container Deployment, Keyless Cloud Auth, Secret Synchronization, Schema Design, Multi-Tenant Permissions, Pre-Commit Enforcement, Edge Proxy. All describe what exists rather than what changed.
+Notice what these five share: a non-technical reader knows what went wrong and what it was worth. Any bullet that needs a paragraph of setup before it means anything is a weak bullet, no matter how hard the work was.
 
-**Could not verify.** No runtime metrics exist anywhere in the repo: no user counts, revenue, latency percentiles, or uptime. The pricing tiers quoted in the old skill file came from the marketing site, not this code. Nothing here supports a claim about adoption or business outcome.
+### Resting on scope, not a number
+
+Drop these first when space is tight. They describe what exists rather than what changed:
+
+- 43-Table Permission Model
+- Agent API
+- Four Providers, One Interface
+- Self-Healing Billing
+- Split Deploy Pipeline
+- Hid the Backend Address
+
+### Verification notes
+
+- **3,802 tests / 334 files** is a static count of `it(` and `test(` call sites, not a runner tally. `vitest list` needs generated Convex types that are gitignored, so it cannot run on a clean checkout.
+- **12x, 1,000x, 2,000 characters, 240KB / 134 embeddings** come from engineering comments written by the authors of those changes. No independent benchmark exists in this repo.
+- **1,000x is a ceiling, not an average.** Indexing packs up to 1,000 messages into one vendor call; the old path sent one call per message. A 40-message knowledge base sees 40x, not 1,000x. Say "up to" if asked.
+- **No runtime or business metrics exist anywhere in this repo.** No user counts, revenue, latency percentiles, uptime, or adoption. No bullet claims any.
+- **The previous version of this file claimed AWS ECS Fargate, ALB, ECR, Route53, SES and Pulumi.** None are in this repo. Deploy targets are Convex and Cloudflare.
+- **This repo has 12 contributors and 224 merged PRs.** These describe the codebase, not your share of it. Claim only what you did.
+- **Nothing here says how the code was written.** A resume sells what you built and what it was worth, not your tooling. Anything describing your development process was cut on purpose; do not add it back.

@@ -1,101 +1,96 @@
-# Tow123 Dispatcher: Resume Bullet Bank
+# Tow123 Dispatcher: Resume Bullets
 
-23 bullets. Every number traces to code or a ticket-referenced comment in this repo. Pick 3 to 5 per resume.
+An autonomous AI dispatcher for a roadside assistance and towing operation. It ingests live job
+and fleet events from two third-party dispatch platforms, talks to customers and drivers over SMS,
+decides which truck and driver to send, and executes the dispatch either through a human approval
+queue or fully on its own.
 
 ---
 
 ## Project Header Lines
 
-- **Tow123 AI Dispatch Console** | TypeScript, React 19, Convex, Vercel AI SDK, Twilio, Anthropic, Google, OpenRouter
-- **Event Relay Sidecar** | TypeScript, Node, Fly.io, Pusher, Socket.IO
+**Tow123 AI Dispatcher** | TypeScript, Convex, React 19, Vercel AI SDK, Google Gemini, Twilio, Stripe
+
+**Event Relay Service** | Node.js, Pusher WebSockets, Fly.io, Docker
+
+**Outpost API Interceptor** | Node.js, Hono, Server-Sent Events
 
 ---
 
-## Database and Query Performance
+## Autonomous Dispatch
 
-- **Query Optimization:** Cut a call-list query reading 1,019 documents and 10.39 MB, which blew past the 1 second platform limit at 1.8 seconds.
-- **Index Range Scans:** Replaced a full-table filter with index range queries that skip completed and cancelled calls entirely.
-- **Data Integrity Bug:** Found 64% of active-thread flags pointing at already-finished calls, inflating routing scans past the 16 MB read ceiling.
-- **Concurrency Fix:** Removed sequential awaits inside a loop that were the dominant cause of timeout spikes on the conversations dashboard.
+- **Autonomous AI Dispatcher:** Built the system that decides which truck and driver to send on every tow, without a human.
+- **Staged Autonomy Rollout:** Graduated the dispatcher through three gated phases: silent scoring, human approval, then full autonomy.
+- **Self-Reverting Safety Net:** Daily job demotes the dispatcher to human approval when its 30-day approval rate falls below 85%.
+- **Decision Accuracy Scoring:** Scored the algorithm's driver pick against the human dispatcher's daily, alerting when 7-day accuracy dropped below 70%.
+- **Truck Eligibility Rules Engine:** Encoded nine rule families covering vehicle weight, drive type, exotics, tires, motorcycles, and location.
+- **Replayable Decision Records:** Every dispatch saves a full fleet snapshot, so any pick can be replayed and explained weeks later.
+- **Fairness and Coverage Guards:** Balanced job counts across drivers and blocked draining the last truck out of a high-demand area.
 
----
+## AI Agents and Customer Communication
 
-## Cost and Tuning
+- **Customer-Facing AI Agent:** Shipped an SMS agent that collects location, vehicle, and service details from stranded customers.
+- **Driver-Facing AI Agent:** Built a second SMS agent that accepts jobs, checks drivers in and out, and requests extra equipment.
+- **Tool-Using Agents:** Gave the agents 31 typed tools so they write real dispatch records instead of only replying.
+- **Human Approval Queue:** Routed every AI-triggered text, dispatch, and third-party write through a dispatcher review queue.
+- **Frustration Escalation:** Detects an angry or stuck customer mid-conversation and hands the thread to a human dispatcher.
+- **Photo Understanding:** The agent reads a photo of a customer's motor club card and a photo of the roadside scene.
+- **High-Value Vehicle Guard:** AI estimates market value with live web search and auto-cancels vehicles worth over $250,000.
 
-- **API Cost Reduction:** Cut routing API spend by widening the ETA recalculation interval from 2 minutes to 5.
-- **Alert Tuning from Field Data:** Retuned GPS freshness thresholds from 30 seconds to 2 minutes after real pings every 10 to 30 seconds tripped warnings on every dispatch.
-- **LLM Round-Trip Elimination:** Inlined static data into the prompt so the agent stops calling a tool, removing token cost from a hot path.
+## Scale and Performance
 
----
+- **Query Timeout Fix:** Cut a 1.8-second dashboard query under 1 second by replacing a full table read with indexed ranges.
+- **Production Crash Elimination:** Bounded runaway database reads that were crashing dispatch, SMS routing, and the inbound webhook.
+- **Full Table Scan Removal:** Replaced every remaining table scan with indexed queries across 79 tables and 165 indexes.
 
-## AI Agents
+## Cost Engineering
 
-- **Multi-Provider LLM Routing:** Routed agent inference across Anthropic, Google, and OpenRouter, switchable per deployment without a redeploy.
-- **Two-Sided Conversational Agents:** Built separate customer and driver AI agents sharing one message store across SMS, voice, and human takeover.
-- **Deterministic Decision Split:** Kept ETA and driver selection as pure functions so the model proposes and the engine decides, leaving dispatch auditable.
-- **Autonomy Graduation Gate:** Gated an operator's move to full autonomy on a 90% approve-as-is rate over their approval history.
-- **Accuracy Monitoring:** Alerted when 7-day dispatch accuracy fell below 70%, tuned upward as operators built trust.
-- **Human-in-the-Loop Approval:** Queued every AI-proposed message for approval with per-channel toggles and phone allowlists during onboarding.
+- **$237-a-Day Bill Stopped:** Traced a $237 single-day Google Maps bill to redundant driver ETA lookups and capped the fan-out.
+- **Routing Call Collapse:** A per-job cooldown cut routing API batches from over 15 an hour down to 1 to 3.
+- **Cheaper Routing Path:** Moved single-driver ETA lookups onto an API call costing 75% less than the batch call it replaced.
+- **Geocoding Cache:** Cached driver address lookups by map cell, cutting Google Geocoding spend by about 90%.
 
----
+## Reliability and Safety
 
-## Integrations
+- **Dead Man's Switch:** A minute-by-minute watchdog emails alerts when the live event feed stops sending heartbeats.
+- **Infinite Loop Guard:** Stopped a write-then-webhook feedback loop from re-dispatching the same job forever.
+- **Three-Layer SMS Kill Switch:** A global switch, a recipient allowlist, and the approval queue prevent accidental texts to real customers.
+- **Data Drift Reconciliation:** 24 scheduled jobs repair fleet and job data when third-party events go missing.
+- **Internal Event Bus:** Built a publish-subscribe layer where 78 always-on subscribers react to 27 business events.
 
-- **Bidirectional Vendor Sync:** Synced calls, drivers, trucks, and ETAs both ways with the industry system of record, using a write-origin guard to stop echo loops.
-- **Webhook Latency Budget:** Held inbound webhook handlers inside Twilio's 15-second response window.
-- **Motor Club Integration:** Integrated a motor-club dispatch platform behind Okta single sign-on with TOTP.
-- **Legacy Bridge:** Shipped a Fly.io sidecar bridging Pusher to Socket.IO so legacy clients consume the new event stream without a rewrite.
+## Testing and Quality
 
----
+- **25,800 Automated Tests:** Grew the suite to roughly 25,800 tests across unit, integration, and browser tiers.
+- **Mutation Testing:** Ran mutation testing to find tests that passed while missing real bugs, then closed those gaps.
+- **249 Job Simulations:** Authored 249 multi-actor simulations that replay full tow jobs against both a fake and a live backend.
+- **Vendor API Mock Server:** Built a local interceptor service that captures and replays third-party traffic during tests.
+- **Contract Drift Alerts:** 73 schemas validate every live third-party response and email the team the moment a field changes.
 
-## ETA Engine
+## Integrations and Operator Tools
 
-- **Stall Detection:** Flagged jobs as stalled after 10 minutes without driver movement and auto-stopped monitoring at 4 hours.
-- **Notification Throttling:** Notified customers only on 5-minute ETA swings, with a 10-minute cooldown between messages.
-- **Stale Data Guard:** Suppressed customer notifications for ETAs over 3 hours, which in practice only came from bad upstream data.
-
----
-
-## Testing
-
-- **Test Suite Scale:** Wrote 25,856 test cases across 1,007 test files covering agents, ETA math, sync, and dispatch decisions.
-- **LLM Scenario Testing:** Replayed full fixture conversations offline to catch agent regressions before deploy.
-- **PII Linting:** Gated test fixtures with a linter blocking real customer data from entering the repository.
+- **Reverse-Engineered Two Platforms:** Integrated two dispatch systems that publish no public API, by decoding their web traffic.
+- **Motor Club Auto-Accept:** Automatically accepts or denies incoming insurance jobs against ETA and price thresholds.
+- **Dispatch Comparison Screen:** Built a replay screen putting the algorithm's pick beside the dispatcher's, with both routes on a map.
+- **Simulator Suite:** Shipped driver GPS, customer text, and dispatch simulators so staff test flows without touching production.
 
 ---
 
 ## Skills Keyword Bank
 
-**Languages:** TypeScript, JavaScript
+**Languages** TypeScript, JavaScript, SQL, HogQL
 
-**Frontend:** React 19, Vite, Tailwind CSS, shadcn/ui, Leaflet, React Leaflet
+**AI / ML** Vercel AI SDK, Google Gemini, OpenRouter, LLM tool calling, agentic workflows, prompt engineering, retrieval grounding, LLM evaluation, human-in-the-loop review, AI observability
 
-**Backend:** Convex, serverless functions, real-time subscriptions, cron scheduling, webhooks, HTTP actions
+**Backend** Convex, Node.js, Hono, serverless functions, event-driven architecture, publish-subscribe, workflow orchestration, cron scheduling, webhooks, WebSockets, REST, Zod validation, optimistic concurrency control
 
-**AI:** Vercel AI SDK, Anthropic Claude, Google Gemini, OpenRouter, agent orchestration, tool calling, structured output, Zod schemas, prompt engineering, LLM evaluation, scenario testing
+**Frontend** React 19, Vite, Tailwind CSS, Leaflet, real-time UI, data-heavy dashboards
 
-**Voice and Messaging:** Twilio Voice, Twilio SMS, webhook signature verification, Pusher, Socket.IO
+**Data** Schema design, index design, query optimization, denormalization, pagination, data reconciliation, retention policies
 
-**Data:** schema design, index design, query optimization, range queries, read-limit tuning, bidirectional sync, reconciliation
+**Cloud / DevOps** Convex Cloud, Cloudflare Pages, Fly.io, Docker, GitHub Actions, CI sharding, change-based deploys, secret rotation, feature flags, PostHog, Sentry-style error alerting
 
-**Observability:** OpenTelemetry, distributed tracing, structured logging, alert thresholds
+**Testing** Vitest, mutation testing (Stryker), contract testing, integration testing, scenario testing, Playwright, LLM scenario evaluation
 
-**Cloud:** Fly.io, Docker, GitHub Actions
+**Integrations** Twilio SMS and MMS, Google Maps Routes and Geocoding, Mapbox, Stripe, Resend, Firebase, Okta SSO with TOTP, Pusher
 
-**Domain:** dispatch, fleet routing, ETA modeling, roadside assistance, motor club integration
-
----
-
-## Report
-
-**Strongest 5.** Each has a measured before and after, or a rare scale number.
-
-1. **Query Optimization** - 1,019 docs, 10.39 MB, 1.8s against a 1s ceiling. Fully specified performance work.
-2. **Data Integrity Bug** - 64% of flags wrong, with the 16 MB consequence named. Shows debugging at the data layer, not the symptom.
-3. **Test Suite Scale** - 25,856 tests is an outlier number and the single most credible rigor signal in the portfolio.
-4. **Alert Tuning from Field Data** - changed a threshold because reality disagreed with the default. Judgment, not code.
-5. **API Cost Reduction** - names the tradeoff taken to cut spend.
-
-**Resting on scope, drop these first.** Two-Sided Conversational Agents, Human-in-the-Loop Approval, Motor Club Integration, Legacy Bridge, Multi-Provider LLM Routing, PII Linting. All describe what exists rather than what changed.
-
-**Could not verify.** No production volume anywhere in the repo: no calls handled, operators live, revenue, or uptime. The ETA thresholds are configured defaults, not measured outcomes, so do not phrase them as results. Test counts come from counting `it` and `test` blocks and include the sidecar.
+**Domain** Towing and roadside assistance, dispatch operations, fleet management, ETA prediction, motor club billing, insurance job intake
